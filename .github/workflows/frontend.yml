@@ -34,8 +34,8 @@ jobs:
       - name: Deploy frontend to Azure Container Apps
         uses: azure/container-apps-deploy-action@v1
         with:
-          appSourcePath: ${{ github.workspace }}/frontend
-          dockerfilePath: ${{ github.workspace }}/frontend/Dockerfile
+          appSourcePath: ./frontend
+          dockerfilePath: Dockerfile
           registryUrl: ${{ vars.AZURE_ACR_LOGIN_SERVER }}
           imageToBuild: ${{ vars.AZURE_ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           containerAppName: ${{ env.CONTAINER_APP_NAME }}

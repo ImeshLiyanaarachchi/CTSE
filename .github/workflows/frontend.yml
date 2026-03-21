@@ -36,7 +36,7 @@ jobs:
         with:
           appSourcePath: ./frontend
           dockerfilePath: Dockerfile
-          registryUrl: ${{ vars.AZURE_ACR_LOGIN_SERVER }}
-          imageToBuild: ${{ vars.AZURE_ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          acrName: imesh2
+          imageToBuild: imesh2.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
           containerAppName: ${{ env.CONTAINER_APP_NAME }}
           resourceGroup: ${{ vars.AZURE_RESOURCE_GROUP }}

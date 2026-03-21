@@ -40,5 +40,3 @@ jobs:
           imageToBuild: ${{ vars.AZURE_ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           containerAppName: ${{ env.CONTAINER_APP_NAME }}
           resourceGroup: ${{ vars.AZURE_RESOURCE_GROUP }}
-          buildArguments: |
-            VITE_API_GATEWAY_BASE_URL=${{ vars.VITE_API_GATEWAY_BASE_URL }}

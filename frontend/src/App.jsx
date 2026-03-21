@@ -36,6 +36,7 @@ function displayTrackingStatus(status) {
 }
 
 export default function App() {
+  console.log("App loaded from latest build");
   const [statuses, setStatuses] = useState({});
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [registerMessage, setRegisterMessage] = useState('');

@@ -1,0 +1,44 @@
+name: Build and Deploy Frontend
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend.yml'
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  CONTAINER_APP_NAME: frontend-service
+  IMAGE_NAME: frontend-service
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy frontend to Azure Container Apps
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}/frontend
+          dockerfilePath: ${{ github.workspace }}/frontend/Dockerfile
+          registryUrl: ${{ vars.AZURE_ACR_LOGIN_SERVER }}
+          imageToBuild: ${{ vars.AZURE_ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          containerAppName: ${{ env.CONTAINER_APP_NAME }}
+          resourceGroup: ${{ vars.AZURE_RESOURCE_GROUP }}
+          buildArguments: |
+            VITE_API_GATEWAY_BASE_URL=${{ vars.VITE_API_GATEWAY_BASE_URL }}

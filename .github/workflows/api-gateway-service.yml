@@ -1,0 +1,42 @@
+name: Build and Deploy API Gateway Service
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'api-gateway/**'
+      - '.github/workflows/api-gateway-service.yml'
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  CONTAINER_APP_NAME: api-gateway-service
+  IMAGE_NAME: api-gateway-service
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy api-gateway-service to Azure Container Apps
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ./api-gateway
+          dockerfilePath: Dockerfile
+          acrName: imesh2
+          imageToBuild: imesh2.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          containerAppName: ${{ env.CONTAINER_APP_NAME }}
+          resourceGroup: ${{ vars.AZURE_RESOURCE_GROUP }}

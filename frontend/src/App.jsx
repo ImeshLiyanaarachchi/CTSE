@@ -38,6 +38,7 @@ function displayTrackingStatus(status) {
 export default function App() {
   console.log("App loaded from latest build");
   console.log("VITE_API_GATEWAY_BASE_URL =", import.meta.env.VITE_API_GATEWAY_BASE_URL);
+  console.log("Removed Contributer");
   const [statuses, setStatuses] = useState({});
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [registerMessage, setRegisterMessage] = useState('');

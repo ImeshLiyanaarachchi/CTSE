@@ -303,7 +303,7 @@ export default function App() {
   if (page === 'adminDashboard' && currentUser?.role === 'admin') {
     return (
       <div className="page">
-        <h1>Admin Dashboard</h1>
+        <h1>Admin Dashboard Changes</h1>
         <p>
           Signed in as <strong>{currentUser.name}</strong> ({currentUser.email}
           )
